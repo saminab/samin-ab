@@ -1,0 +1,18 @@
+#!/bin/bash
+ls waveforms*.zip | while read zfile
+do
+  dir=${zfile:0:10}
+  mkdir  $dir 
+
+  cp $zfile  $dir   
+  cd $dir
+  unzip $zfile
+  rm *.zip
+  cd ..
+  new_name=`ls -1  $dir/2* |awk 'NR == 1 {print substr($0,14,2)""substr($0,17,2)""substr($0,20,2)}'`
+  echo $new_name
+  mv $dir $new_name
+done
+
+echo "Process has been done!"
+
